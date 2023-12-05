@@ -23,9 +23,12 @@ namespace API
             services.AddEndpointsApiExplorer();
             services.AddSwaggerGen();
 
-            services.AddDbContext<StoreContext>(opt=>{
+            services.AddDbContext<StoreContext>(opt =>
+            {
                 opt.UseSqlite(Configuration.GetConnectionString("DefaultConnection"));
             });
+
+            services.AddCors();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -41,10 +44,15 @@ namespace API
             app.UseHttpsRedirection();
 
             app.UseRouting();
+            app.UseCors(opt =>
+            {
+                opt.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin();
+            });
 
             app.UseAuthorization();
 
-            app.UseEndpoints(endpoints =>{
+            app.UseEndpoints(endpoints =>
+            {
                 endpoints.MapControllers();
             });
         }
