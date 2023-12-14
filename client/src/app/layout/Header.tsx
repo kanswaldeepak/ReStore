@@ -36,10 +36,10 @@ const navStyles = {
     color: 'inherit',
     textDecoration: 'none',
     '&:hover': {
-        color:'black'
+        color: 'black'
     },
     '&.active': {
-        color:'text.secondary'
+        color: 'text.secondary'
     }
 }
 
@@ -113,56 +113,45 @@ export default function Header({ darkMode, handleThemeChangeApp }: Props) {
     };
 
     return (
-        <AppBar position="static" sx={{ mb: 4 }}>
+        <AppBar position="sticky" sx={{ mb: 4 }}>
             <Container maxWidth="xl">
-                <Toolbar disableGutters>
-                    <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
-                    <Typography
-                        variant="h6" noWrap>RE-STORE</Typography>
-                    <Typography
-                        variant="h6" noWrap component="a"
-                        href="#app-bar-with-responsive-menu"
-                        sx={{
-                            mr: 2,
-                            ml: 2,
-                            display: { xs: 'none', md: 'flex' },
-                            fontFamily: 'monospace',
-                            fontWeight: 700,
-                            letterSpacing: '.3rem',
-                            color: 'inherit',
-                            textDecoration: 'none',
-                        }}
-                    >
-                        <FormGroup>
-                            <FormControlLabel
-                                control={<MaterialUISwitch sx={{ m: 1 }}
-                                    onChange={handleThemeChangeApp} />}
-                                label="" />
-                        </FormGroup>
-                    </Typography>
+                <Toolbar disableGutters sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                        <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
+                        <Typography
+                            variant="h6" noWrap>RE-STORE</Typography>
+                        <Typography
+                            variant="h6" noWrap component="a"
+                            href="#app-bar-with-responsive-menu"
+                            sx={{
+                                mr: 2, ml: 2, display: { xs: 'none', md: 'flex' },
+                                fontFamily: 'monospace', fontWeight: 700,
+                                letterSpacing: '.3rem', color: 'inherit',
+                                textDecoration: 'none',
+                            }}>
+                            <FormGroup>
+                                <FormControlLabel
+                                    control={<MaterialUISwitch sx={{ m: 1 }}
+                                        onChange={handleThemeChangeApp} />}
+                                    label="" />
+                            </FormGroup>
+                        </Typography>
 
                     <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
                         <IconButton
-                            size="large"
-                            aria-label="account of current user"
-                            aria-controls="menu-appbar"
-                            aria-haspopup="true"
-                            onClick={handleOpenNavMenu}
-                            color="inherit"
+                            size="large" aria-label="account of current user"
+                            aria-controls="menu-appbar" aria-haspopup="true"
+                            onClick={handleOpenNavMenu} color="inherit"
                         >
                             <MenuIcon />
                         </IconButton>
                         <Menu
-                            id="menu-appbar"
-                            anchorEl={anchorElNav}
+                            id="menu-appbar" anchorEl={anchorElNav}
                             anchorOrigin={{
-                                vertical: 'bottom',
-                                horizontal: 'left',
+                                vertical: 'bottom', horizontal: 'left',
                             }}
                             keepMounted
                             transformOrigin={{
-                                vertical: 'top',
-                                horizontal: 'left',
+                                vertical: 'top', horizontal: 'left',
                             }}
                             open={Boolean(anchorElNav)}
                             onClose={handleCloseNavMenu}
@@ -170,27 +159,25 @@ export default function Header({ darkMode, handleThemeChangeApp }: Props) {
                                 display: { xs: 'block', md: 'none' },
                             }}
                         >
-                            <List>
-                                {midLinks.map(({ title, path }) => (
-                                    <ListItem component={NavLink}
-                                        to={path} key={path}
-                                        sx={navStyles}>
+                                <List>
+                                    {midLinks.map(({ title, path }) => (
+                                        <ListItem component={NavLink}
+                                            to={path} key={path} sx={navStyles}>
                                             {title.toUpperCase()}
                                         </ListItem>
-                                ))
-                                }
-                            </List>
-                            <List>
-                                {rightLinks.map(({ title, path }) => (
-                                    <ListItem component={NavLink}
-                                        to={path} key={path}
-                                        sx={navStyles}>
+                                    ))
+                                    }
+                                </List>
+                                
+                                <List>
+                                    {rightLinks.map(({ title, path }) => (
+                                        <ListItem component={NavLink}
+                                            to={path} key={path} sx={navStyles}>
                                             {title.toUpperCase()}
                                         </ListItem>
-                                ))
-                                }
-                            </List>
-
+                                    ))
+                                    }
+                                </List>
                             {/* {pages.map((page) => (
                                 <MenuItem key={page} onClick={handleCloseNavMenu}>
                                     <Typography textAlign="center">{page}</Typography>
@@ -218,31 +205,17 @@ export default function Header({ darkMode, handleThemeChangeApp }: Props) {
                         LOGO
                     </Typography>
                     <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-                    <List sx={{ display: 'flex' }}>
-                                {midLinks.map(({ title, path }) => (
-                                    <ListItem component={NavLink}
-                                        to={path} key={path}
-                                        sx={{color:'inherit'}}>
-                                            {title.toUpperCase()}
-                                        </ListItem>
-                                ))
-                                }
-                            </List>
-                            <List sx={{ display: 'flex' }}>
-                                {rightLinks.map(({ title, path }) => (
-                                    <ListItem component={NavLink}
-                                        to={path} key={path}
-                                        sx={{color:'inherit', display:'block'}}>
-                                            {title.toUpperCase()}
-                                        </ListItem>
-                                ))
-                                }
-                            </List>
-                            <IconButton size='large' sx={{color:'inherit'}}>
-                                <Badge badgeContent={4} color='secondary'>
-                                    <ShoppingCart />
-                                </Badge>
-                            </IconButton>
+                        <List sx={{ display: 'flex' }}>
+                            {midLinks.map(({ title, path }) => (
+                                <ListItem component={NavLink}
+                                    to={path} key={path}
+                                    sx={{ color: 'inherit' }}>
+                                    {title.toUpperCase()}
+                                </ListItem>
+                            ))
+                            }
+                        </List>
+                        
                         {/* {pages.map((page) => (
                             <Button
                                 key={page}
@@ -252,6 +225,25 @@ export default function Header({ darkMode, handleThemeChangeApp }: Props) {
                                 {page}
                             </Button>
                         ))} */}
+                    </Box>
+                    
+                    <Box sx={{ flexGrow: 0, mr:'15px' }} display={'flex'} alignItems={'center'}>
+                    <List sx={{ display: 'flex' }}>
+                            {rightLinks.map(({ title, path }) => (
+                                <ListItem component={NavLink}
+                                    to={path} key={path}
+                                    sx={{ color: 'inherit', display: 'block' }}>
+                                    {title.toUpperCase()}
+                                </ListItem>
+                            ))
+                            }
+                        </List>
+                        <IconButton size='large' sx={{ color: 'inherit' }}>
+                            <Badge badgeContent={4} color='secondary'>
+                                <ShoppingCart />
+                            </Badge>
+                        </IconButton>
+                        
                     </Box>
 
                     <Box sx={{ flexGrow: 0 }}>
@@ -276,6 +268,7 @@ export default function Header({ darkMode, handleThemeChangeApp }: Props) {
                             open={Boolean(anchorElUser)}
                             onClose={handleCloseUserMenu}
                         >
+                            
                             {settings.map((setting) => (
                                 <MenuItem key={setting} onClick={handleCloseUserMenu}>
                                     <Typography textAlign="center">{setting}</Typography>
