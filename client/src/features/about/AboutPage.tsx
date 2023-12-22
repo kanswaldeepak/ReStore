@@ -28,8 +28,9 @@ export default function AboutPage(){
                 <Button variant='contained' onClick={()=> agent.TestErrors.get500Error().catch(error => console.log(error))}>
                     Test 500 Error
                 </Button>
-                <Button onClick={getValidationError} variant={'contained'}>Test validation
-                    error</Button>
+                <Button onClick={getValidationError} variant={'contained'}>
+                    Test validation error
+                </Button>
             </ButtonGroup>
             {validationErrors.length > 0 &&
                 <Alert severity="error">

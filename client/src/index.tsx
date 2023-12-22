@@ -4,9 +4,7 @@ import './index.css';
 import App from './app/layout/App';
 import reportWebVitals from './features/reportWebVitals';
 import { BrowserRouter } from 'react-router-dom';
-// import { createBrowserHistory } from "history";
-
-// export const history = createBrowserHistory();
+import { StoreProvider } from './app/context/StoreContext';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -14,7 +12,9 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <BrowserRouter>
-      <App />
+      <StoreProvider>
+        <App />
+      </StoreProvider>
     </BrowserRouter>
   </React.StrictMode>
 );

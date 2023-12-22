@@ -12,8 +12,9 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
 import { Badge, FormControlLabel, FormGroup, List, ListItem, Switch, styled } from '@mui/material';
-import { NavLink } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import { ShoppingCart } from '@mui/icons-material';
+import { useStoreContext } from '../context/StoreContext';
 
 interface Props {
     darkMode: boolean,
@@ -91,7 +92,6 @@ const MaterialUISwitch = styled(Switch)(({ theme }) => ({
 }));
 
 
-
 export default function Header({ darkMode, handleThemeChangeApp }: Props) {
 
     const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
@@ -112,29 +112,33 @@ export default function Header({ darkMode, handleThemeChangeApp }: Props) {
         setAnchorElUser(null);
     };
 
+    const { basket } = useStoreContext();
+    const itemCount = basket.items.reduce((sum, item) => sum + item.quantity, 0);
+
+
     return (
         <AppBar position="sticky" sx={{ mb: 4 }}>
             <Container maxWidth="xl">
                 <Toolbar disableGutters sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                        <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
-                        <Typography
-                            variant="h6" noWrap>RE-STORE</Typography>
-                        <Typography
-                            variant="h6" noWrap component="a"
-                            href="#app-bar-with-responsive-menu"
-                            sx={{
-                                mr: 2, ml: 2, display: { xs: 'none', md: 'flex' },
-                                fontFamily: 'monospace', fontWeight: 700,
-                                letterSpacing: '.3rem', color: 'inherit',
-                                textDecoration: 'none',
-                            }}>
-                            <FormGroup>
-                                <FormControlLabel
-                                    control={<MaterialUISwitch sx={{ m: 1 }}
-                                        onChange={handleThemeChangeApp} />}
-                                    label="" />
-                            </FormGroup>
-                        </Typography>
+                    <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
+                    <Typography
+                        variant="h6" noWrap>RE-STORE</Typography>
+                    <Typography
+                        variant="h6" noWrap component="a"
+                        href="#app-bar-with-responsive-menu"
+                        sx={{
+                            mr: 2, ml: 2, display: { xs: 'none', md: 'flex' },
+                            fontFamily: 'monospace', fontWeight: 700,
+                            letterSpacing: '.3rem', color: 'inherit',
+                            textDecoration: 'none',
+                        }}>
+                        <FormGroup>
+                            <FormControlLabel
+                                control={<MaterialUISwitch sx={{ m: 1 }}
+                                    onChange={handleThemeChangeApp} />}
+                                label="" />
+                        </FormGroup>
+                    </Typography>
 
                     <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
                         <IconButton
@@ -159,25 +163,25 @@ export default function Header({ darkMode, handleThemeChangeApp }: Props) {
                                 display: { xs: 'block', md: 'none' },
                             }}
                         >
-                                <List>
-                                    {midLinks.map(({ title, path }) => (
-                                        <ListItem component={NavLink}
-                                            to={path} key={path} sx={navStyles}>
-                                            {title.toUpperCase()}
-                                        </ListItem>
-                                    ))
-                                    }
-                                </List>
-                                
-                                <List>
-                                    {rightLinks.map(({ title, path }) => (
-                                        <ListItem component={NavLink}
-                                            to={path} key={path} sx={navStyles}>
-                                            {title.toUpperCase()}
-                                        </ListItem>
-                                    ))
-                                    }
-                                </List>
+                            <List>
+                                {midLinks.map(({ title, path }) => (
+                                    <ListItem component={NavLink}
+                                        to={path} key={path} sx={navStyles}>
+                                        {title.toUpperCase()}
+                                    </ListItem>
+                                ))
+                                }
+                            </List>
+
+                            <List>
+                                {rightLinks.map(({ title, path }) => (
+                                    <ListItem component={NavLink}
+                                        to={path} key={path} sx={navStyles}>
+                                        {title.toUpperCase()}
+                                    </ListItem>
+                                ))
+                                }
+                            </List>
                             {/* {pages.map((page) => (
                                 <MenuItem key={page} onClick={handleCloseNavMenu}>
                                     <Typography textAlign="center">{page}</Typography>
@@ -215,7 +219,7 @@ export default function Header({ darkMode, handleThemeChangeApp }: Props) {
                             ))
                             }
                         </List>
-                        
+
                         {/* {pages.map((page) => (
                             <Button
                                 key={page}
@@ -226,9 +230,9 @@ export default function Header({ darkMode, handleThemeChangeApp }: Props) {
                             </Button>
                         ))} */}
                     </Box>
-                    
-                    <Box sx={{ flexGrow: 0, mr:'15px' }} display={'flex'} alignItems={'center'}>
-                    <List sx={{ display: 'flex' }}>
+
+                    <Box sx={{ flexGrow: 0, mr: '15px' }} display={'flex'} alignItems={'center'}>
+                        <List sx={{ display: 'flex' }}>
                             {rightLinks.map(({ title, path }) => (
                                 <ListItem component={NavLink}
                                     to={path} key={path}
@@ -238,12 +242,12 @@ export default function Header({ darkMode, handleThemeChangeApp }: Props) {
                             ))
                             }
                         </List>
-                        <IconButton size='large' sx={{ color: 'inherit' }}>
-                            <Badge badgeContent={4} color='secondary'>
+                        <IconButton component={Link} to='/basket' size='large' sx={{ color: 'inherit' }}>
+                            <Badge badgeContent={itemCount} color='secondary'>
                                 <ShoppingCart />
                             </Badge>
                         </IconButton>
-                        
+
                     </Box>
 
                     <Box sx={{ flexGrow: 0 }}>
@@ -268,7 +272,7 @@ export default function Header({ darkMode, handleThemeChangeApp }: Props) {
                             open={Boolean(anchorElUser)}
                             onClose={handleCloseUserMenu}
                         >
-                            
+
                             {settings.map((setting) => (
                                 <MenuItem key={setting} onClick={handleCloseUserMenu}>
                                     <Typography textAlign="center">{setting}</Typography>
